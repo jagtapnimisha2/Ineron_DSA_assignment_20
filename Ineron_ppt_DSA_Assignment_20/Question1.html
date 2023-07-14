@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      // Node class to represent a node in the binary tree
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+// Function to find the subtree with the maximum sum
+function findMaxSubtreeSum(root) {
+  let maxSum = -Infinity; // Variable to store the maximum sum
+  let maxSubtree = null; // Variable to store the root of the subtree with the maximum sum
+
+  // Recursive helper function to calculate the sum of a subtree
+  function calculateSum(node) {
+    if (node === null) {
+      return 0;
+    }
+
+    // Calculate the sum of the left and right subtrees recursively
+    const leftSum = calculateSum(node.left);
+    const rightSum = calculateSum(node.right);
+
+    // Calculate the sum of the current subtree (including the current node)
+    const currentSum = node.value + leftSum + rightSum;
+
+    // Update the maximum sum and subtree if the current subtree has a larger sum
+    if (currentSum > maxSum) {
+      maxSum = currentSum;
+      maxSubtree = node;
+    }
+
+    // Return the sum of the current subtree
+    return currentSum;
+  }
+
+  // Call the recursive helper function on the root of the binary tree
+  calculateSum(root);
+
+  return maxSum;
+}
+
+// Example usage:
+const root1 = new Node(1);
+root1.left = new Node(2);
+root1.right = new Node(3);
+root1.left.left = new Node(4);
+root1.left.right = new Node(5);
+root1.right.left = new Node(6);
+root1.right.right = new Node(7);
+
+console.log(findMaxSubtreeSum(root1)); // Output: 28
+
+const root2 = new Node(1);
+root2.left = new Node(-2);
+root2.right = new Node(3);
+root2.left.left = new Node(4);
+root2.left.right = new Node(5);
+root2.right.left = new Node(-6);
+root2.right.right = new Node(2);
+
+console.log(findMaxSubtreeSum(root2)); // Output: 7
+  
+    </script>
+</body>
+</html>
